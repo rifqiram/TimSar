@@ -16,6 +16,8 @@
                 </button>
             </div>
 
+            <!-- i -->
+
             <!-- Header: Right side -->
             <div class="flex items-center space-x-3">
                 <!-- User Menu -->

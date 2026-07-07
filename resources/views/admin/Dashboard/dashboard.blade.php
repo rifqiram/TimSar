@@ -231,6 +231,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nama</th>
+                                <th>Umur</th>
                                 <th>Email</th>
                                 <th>Telepon</th>
                                 <th>Keahlian</th>
@@ -444,15 +445,25 @@
         const pesertaTable = document.getElementById('pesertaTable');
         pesertaTable.innerHTML = '';
         if (!peserta.length) {
-            pesertaTable.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--color-text-muted);padding:24px;">Belum ada data peserta</td></tr>';
+            // Kolom colspan disesuaikan menjadi 7 karena jumlah header ada 7
+            pesertaTable.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--color-text-muted);padding:24px;">Belum ada data peserta</td></tr>';
         }
         peserta.forEach((item, i) => {
             pesertaTable.insertAdjacentHTML('beforeend', `
                 <tr>
                     <td style="color:var(--color-text-muted);font-size:12px;">${i + 1}</td>
                     <td><span class="font-semibold">${item.nama}</span></td>
+                    
+                    <!-- 1. Kolom UMUR (Menampilkan umur peserta) -->
+                    <td>${item.umur || '<span style="color:var(--color-text-muted);">-</span>'} Thn</td>
+                    
+                    <!-- 2. Kolom EMAIL -->
                     <td style="color:var(--color-text-secondary);">${item.email}</td>
+                    
+                    <!-- 3. Kolom TELEPON -->
                     <td>${item.telepon || '<span style="color:var(--color-text-muted);">-</span>'}</td>
+                    
+                    <!-- 4. Kolom KEAHLIAN (Menampilkan keahlian dari dropdown baru) -->
                     <td>${item.keahlian || '<span style="color:var(--color-text-muted);">-</span>'}</td>
 
                     <td>
@@ -464,7 +475,9 @@
             `);
         });
         const pesertaSelect = document.getElementById('pendaftaranPeserta');
-        pesertaSelect.innerHTML = '<option value="">— Pilih Peserta —</option>' + peserta.map(p => `<option value="${p.id}">${p.nama}</option>`).join('');
+        if (pesertaSelect) {
+            pesertaSelect.innerHTML = '<option value="">— Pilih Peserta —</option>' + peserta.map(p => `<option value="${p.id}">${p.nama}</option>`).join('');
+        }
         return peserta;
     }
 
