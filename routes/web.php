@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+<<<<<<< HEAD
+use App\Http\Controllers\ProfileController; // Tambahkan import ProfileController
+=======
 use App\Http\Controllers\PendaftaranController;
+>>>>>>> origin/main
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/admin', '/admin/login');
@@ -15,7 +19,20 @@ Route::view('/user/register', 'user.Auth.register')->name('user.register');
 // User Routes (Middleware dilepas di web karena auth menggunakan localStorage JS)
 Route::prefix('user')->name('user.')->group(function () {
     Route::view('/dashboard', 'user.dashboard.index')->name('dashboard');
+    
+    // --- PENYESUAIAN LANGKAH 3 DI SINI ---
+    // Mengganti Route::view('/profile'...) menjadi Route::get dan Route::put ke Controller
     Route::view('/profile', 'user.profile.index')->name('profile');
+<<<<<<< HEAD
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // ------------------------------------
+    
+    Route::view('/training', 'user.training.index')->name('training');
+    Route::view('/recommendation', 'user.recommendation.index')->name('recommendation');
+});
+
+// Admin Routes ...
+=======
     
     // Rute Form Pendaftaran Pelatihan
     Route::get('/training', [PendaftaranController::class, 'create'])->name('training');
@@ -24,6 +41,7 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::view('/recommendation', 'user.recommendation.index')->name('recommendation');
 });
 
+>>>>>>> origin/main
 Route::view('/admin/pelatihan/create', 'admin.Pelatihan.pelatihan-create')->name('admin.pelatihan.create');
 Route::view('/admin/pelatihan/edit', 'admin.Pelatihan.pelatihan-edit')->name('admin.pelatihan.edit');
 Route::view('/admin/mentor/create', 'admin.Mentor.mentor-create')->name('admin.mentor.create');
@@ -33,4 +51,8 @@ Route::view('/admin/peserta/edit', 'admin.Peserta.peserta-edit')->name('admin.pe
 Route::view('/admin/peserta/riwayat', 'admin.Peserta.peserta-riwayat')->name('admin.peserta.riwayat');
 Route::view('/admin/pendaftaran/create', 'admin.Pendaftaran.pendaftaran-create')->name('admin.pendaftaran.create');
 
+<<<<<<< HEAD
+Route::redirect('/', '/user/login');
+=======
 Route::view('/', 'welcome')->name('landing');
+>>>>>>> origin/main

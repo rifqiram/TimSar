@@ -11,11 +11,17 @@ use App\Http\Controllers\ProfilKeahlianController;
 use App\Http\Controllers\RekomendasiController;
 use Illuminate\Support\Facades\Route;
 
+// --- ROUTE PUBLIC / BEBAS AKSES TANPA TOKEN (UNTUK TESTING) ---
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
+// Pindahkan ke sini agar fitur profil bisa dibaca dan disimpan langsung saat demo/tes
+Route::get('/me', [AuthController::class, 'me']);
+Route::post('/user/profile/update', [AuthController::class, 'updateProfile']);
+
+
+// --- ROUTE YANG MEMERLUKAN AUTENTIKASI ---
 Route::middleware('auth.sirekpel')->group(function () {
-    Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::apiResource('kategori', KategoriController::class);
