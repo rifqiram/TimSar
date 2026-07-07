@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'User Dashboard') - {{ config('app.name', 'TimSar') }}</title>
-    <!-- Tambahkan CSS/Tailwind/Bootstrap sesuai kebutuhan tahap selanjutnya -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
@@ -22,26 +21,15 @@
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
     <div class="flex h-screen overflow-hidden">
         
-        <!-- Sidebar -->
         @include('components.user.sidebar')
 
         <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-            <!-- Navbar -->
             @include('components.user.navbar')
 
-            <!-- Main Content -->
             <main class="w-full grow p-6">
-                <!-- Breadcrumb Placeholder -->
-                <div class="mb-4">
-                    <h1 class="text-2xl font-bold text-gray-900">@yield('title', 'Halaman')</h1>
-                    <div class="text-sm text-gray-500 mt-1">@yield('breadcrumb', 'User / Halaman')</div>
-                </div>
-
-                <!-- Page Content -->
                 @yield('content')
             </main>
             
-            <!-- Footer -->
             @include('components.user.footer')
         </div>
     </div>
