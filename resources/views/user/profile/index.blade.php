@@ -52,7 +52,7 @@
     </div>
 </div>
 
-<!-- jajal -->
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     
