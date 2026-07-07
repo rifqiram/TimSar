@@ -89,7 +89,9 @@
 
         if (!token) return;
         if (user && user.role) {
-            window.location.href = user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard';
+            if (window.location.pathname !== '/user/dashboard') {
+                window.location.href = user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard';
+            }
             return;
         }
 
@@ -104,7 +106,9 @@
             const payload = await response.json();
             const user = payload.data?.user ?? payload.user;
             setApiUser(user);
-            window.location.href = user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard';
+            if (window.location.pathname !== '/user/dashboard') {
+                window.location.href = user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard';
+            }
         } catch (error) {}
     }
 

@@ -126,3 +126,12 @@ php artisan test
 
 Status implementasi terakhir:
 - Seluruh 10 test suite (40 assertions) passed dengan sukses!
+
+
+## Frontend Layout (Role User)
+
+- Menggunakan sistem UI Layout terpisah: `layouts/user.blade.php`.
+- Autentikasi Frontend berbasis localStorage (`getApiToken()`, `getApiUser()`) melalui API.
+- Proteksi route berbasis Client-Side JS (bukan middleware `auth.sirekpel` secara server-side). Akses view akan otomatis di-*redirect* jika token localStorage kosong.
+- Komponen Sidebar bersih dari legacy CSS `sidebar-expanded` dan animasi collapse yang tidak digunakan. Sidebar konstan, responsif, & kontras tinggi.
+- UI Dashboard menggunakan `bg-slate-50`, container shadow modern (`rounded-xl`), dan card `bg-gradient` layaknya template Tabler/Flowbite modern.

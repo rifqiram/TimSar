@@ -9,7 +9,14 @@ Route::post('/admin/login', [AuthController::class, 'login']);
 Route::view('/admin/dashboard', 'admin.Dashboard.dashboard')->name('admin.dashboard');
 Route::view('/user/login', 'user.Auth.login')->name('user.login');
 Route::view('/user/register', 'user.Auth.register')->name('user.register');
-Route::view('/user/dashboard', 'user.Dashboard.dashboard')->name('user.dashboard');
+// User Routes
+// User Routes (Middleware dilepas di web karena auth menggunakan localStorage JS)
+Route::prefix('user')->name('user.')->group(function () {
+    Route::view('/dashboard', 'user.dashboard.index')->name('dashboard');
+    Route::view('/profile', 'user.profile.index')->name('profile');
+    Route::view('/training', 'user.training.index')->name('training');
+    Route::view('/recommendation', 'user.recommendation.index')->name('recommendation');
+});
 Route::view('/admin/pelatihan/create', 'admin.Pelatihan.pelatihan-create')->name('admin.pelatihan.create');
 Route::view('/admin/pelatihan/edit', 'admin.Pelatihan.pelatihan-edit')->name('admin.pelatihan.edit');
 Route::view('/admin/mentor/create', 'admin.Mentor.mentor-create')->name('admin.mentor.create');
@@ -19,6 +26,4 @@ Route::view('/admin/peserta/edit', 'admin.Peserta.peserta-edit')->name('admin.pe
 Route::view('/admin/peserta/riwayat', 'admin.Peserta.peserta-riwayat')->name('admin.peserta.riwayat');
 Route::view('/admin/pendaftaran/create', 'admin.Pendaftaran.pendaftaran-create')->name('admin.pendaftaran.create');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/user/login');
