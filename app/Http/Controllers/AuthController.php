@@ -2,32 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    protected AuthService $authService;
+
+    public function __construct(AuthService $authService)
     {
-        $data = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+        $this->authService = $authService;
+    }
 
-        $user = User::where('email', $data['email'])->first();
+    public function login(LoginRequest $request)
+    {
+        // Pengecekan Rate Limiting
+        $request->authenticate();
 
-        if (! $user || ! Hash::check($data['password'], $user->password)) {
-            return $this->errorResponse('Email atau password salah', 401);
+        $credentials = $request->only('email', 'password');
+        
+        $user = $this->authService->attemptLogin($credentials);
+
+        if (! $user) {
+            RateLimiter::hit($request->throttleKey());
+            return $this->errorResponse('Email atau password salah.', 401);
         }
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        RateLimiter::clear($request->throttleKey());
+
+        $token = $this->authService->generateToken($user);
 
         return $this->successResponse([
             'token' => $token,
             'user' => new UserResource($user),
-        ], 'Login berhasil');
+        ], 'Login berhasil.');
+    }
+
+    public function register(RegisterRequest $request)
+    {
+        $data = $request->validated();
+        
+        $user = $this->authService->registerUser($data, $request->user());
+
+        $token = $this->authService->generateToken($user);
+
+        return $this->successResponse([
+            'token' => $token,
+            'user' => new UserResource($user),
+        ], 'Registrasi berhasil.', 201);
     }
 
     public function me(Request $request)
@@ -36,6 +62,7 @@ class AuthController extends Controller
         $user = $request->user() ?? User::first();
 
         return $this->successResponse([
+<<<<<<< HEAD
             'user' => new UserResource($user),
         ], 'Data user berhasil diambil');
     }
@@ -102,12 +129,18 @@ class AuthController extends Controller
             'token' => $token,
             'user' => new UserResource($user),
         ], 'Register berhasil', 201);
+=======
+            'user' => new UserResource($request->user()),
+        ], 'Data user berhasil diambil.');
+>>>>>>> origin/main
     }
 
     public function logout(Request $request)
     {
-        $request->user()?->currentAccessToken()?->delete();
+        if ($request->user()) {
+            $this->authService->revokeCurrentToken($request->user());
+        }
 
-        return $this->successResponse(null, 'Logout berhasil');
+        return $this->successResponse(null, 'Logout berhasil.');
     }
 }

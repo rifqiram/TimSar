@@ -88,7 +88,7 @@
                         <a href="#programs" class="nav-link">Pelatihan</a>
                         <a href="#mentors"  class="nav-link">Mentor</a>
                         <a href="#footer"   class="nav-link">Kontak</a>
-                        <a href="{{ url('/user/login') }}"
+                        <a href="{{ route('user.login') }}"
                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition btn-primary-hover">
                             Login
                         </a>
@@ -119,11 +119,10 @@
                                class="btn-primary-hover inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-600 text-white font-bold shadow-lg shadow-blue-200 hover:bg-blue-700">
                                 Lihat Program Pelatihan
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                            </a>
-                            <a href="#about"
-                               class="btn-primary-hover inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-slate-800 font-bold border border-slate-200 shadow hover:bg-slate-50">
-                                Daftar Sekarang
-                            </a>
+                        <a href="{{ route('user.pendaftaran.create') }}"
+                        class="btn-primary-hover inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-slate-800 font-bold border border-slate-200 shadow hover:bg-slate-50">
+                         Daftar Sekarang
+                        </a>
                         </div>
                     </div>
 
@@ -390,7 +389,7 @@
                             <a href="#programs" class="hover:text-blue-600 transition">Pelatihan</a>
                             <a href="#mentors" class="hover:text-blue-600 transition">Mentor</a>
                             <a href="#footer" class="hover:text-blue-600 transition">Kontak</a>
-                            <a href="{{ url('/user/login') }}" class="hover:text-blue-600 transition">Login</a>
+                            <a href="{{ route('user.login') }}" class="hover:text-blue-600 transition">Login</a>
                         </div>
                     </div>
                 </div>
