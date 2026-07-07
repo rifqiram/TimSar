@@ -17,30 +17,30 @@
         </div>
     </div>
 
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-lg mx-auto">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800">Profil Saya</h2>
+    <div class="bg-white dark:bg-slate-800 shadow-md rounded-xl px-8 pt-6 pb-8 mb-4 max-w-lg mx-auto transition-colors duration-200">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Profil Saya</h2>
 
-        <div id="alert-message" class="hidden p-4 mb-4 text-sm rounded-lg" role="alert"></div>
+        <div id="alert-message" role="alert" aria-live="polite" class="hidden p-4 mb-4 text-sm rounded-lg" role="alert"></div>
 
         <form id="profile-form">
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Nama Lengkap</label>
-                <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Nama Lengkap</label>
+                <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:focus:ring-blue-500" required>
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Email</label>
+                <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:focus:ring-blue-500" required>
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Nomor Telepon</label>
-                <input type="text" id="no_telp" name="no_telp" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Nomor Telepon</label>
+                <input type="text" id="no_telp" name="no_telp" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:focus:ring-blue-500">
             </div>
 
             <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Alamat</label>
-                <textarea id="alamat" name="alamat" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Alamat</label>
+                <textarea id="alamat" name="alamat" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:focus:ring-blue-500"></textarea>
             </div>
 
             <div class="flex items-center justify-between">
@@ -117,13 +117,13 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(({ ok, data }) => {
             const alertBox = document.getElementById('alert-message');
-            alertBox.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
+            alertBox.classList.remove('hidden', 'bg-green-100 dark:bg-green-900/30', 'text-green-700 dark:text-green-400', 'bg-red-100 dark:bg-red-900/30', 'text-red-700 dark:text-red-400');
             
             if(ok) {
-                alertBox.classList.add('bg-green-100', 'text-green-700');
+                alertBox.classList.add('bg-green-100 dark:bg-green-900/30', 'text-green-700 dark:text-green-400');
                 alertBox.innerText = data.message || 'Profil berhasil diperbarui!';
             } else {
-                alertBox.classList.add('bg-red-100', 'text-red-700');
+                alertBox.classList.add('bg-red-100 dark:bg-red-900/30', 'text-red-700 dark:text-red-400');
                 alertBox.innerText = data.message || 'Gagal memperbarui profil.';
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error saat memperbarui profil:', error);
             const alertBox = document.getElementById('alert-message');
             alertBox.classList.remove('hidden');
-            alertBox.classList.add('bg-red-100', 'text-red-700');
+            alertBox.classList.add('bg-red-100 dark:bg-red-900/30', 'text-red-700 dark:text-red-400');
             alertBox.innerText = 'Terjadi kesalahan sistem.';
         });
     });

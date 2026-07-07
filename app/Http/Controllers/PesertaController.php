@@ -6,6 +6,8 @@ use App\Http\Resources\PesertaResource;
 use App\Http\Resources\PendaftaranResource;
 use App\Models\Peserta;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePesertaRequest;
+use App\Http\Requests\UpdatePesertaRequest;
 
 class PesertaController extends Controller
 {
@@ -15,40 +17,37 @@ class PesertaController extends Controller
             return $response;
         }
 
-        return $this->successResponse(PesertaResource::collection(Peserta::all()), 'Data peserta berhasil diambil');
+        return $this->successResponse(PesertaResource::collection(Peserta::latest()->paginate($this->perPage)), 'Data peserta berhasil diambil');
     }
 
-    public function store(Request $request)
+    public function store(StorePesertaRequest $request)
     {
         if ($response = $this->authorizeAdmin($request)) {
             return $response;
         }
 
-        $data = $request->validate([
-            'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:tabel_peserta,email',
-            'telepon' => 'nullable|string|max:50',
-            'keahlian' => 'nullable|string|max:255',
-        ]);
+        $data = $request->validated();
 
         $peserta = Peserta::create($data);
 
         return $this->successResponse(new PesertaResource($peserta), 'Peserta berhasil dibuat', 201);
     }
 
-    public function show(Peserta $peserta)
+    public function show(Request $request, Peserta $peserta)
     {
+        if ($response = $this->authorizeAdmin($request)) {
+            return $response;
+        }
         return $this->successResponse(new PesertaResource($peserta), 'Detail peserta berhasil diambil');
     }
 
-    public function update(Request $request, Peserta $peserta)
+    public function update(UpdatePesertaRequest $request, Peserta $peserta)
     {
-        $data = $request->validate([
-            'nama' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|email|unique:tabel_peserta,email,' . $peserta->id,
-            'telepon' => 'nullable|string|max:50',
-            'keahlian' => 'nullable|string|max:255',
-        ]);
+        if ($response = $this->authorizeAdmin($request)) {
+            return $response;
+        }
+
+        $data = $request->validated();
 
         $peserta->update($data);
 
@@ -72,8 +71,8 @@ class PesertaController extends Controller
 
     public function riwayat(Peserta $peserta)
     {
-        return $this->successResponse(
-            PendaftaranResource::collection($peserta->pendaftarans()->with('pelatihan.mentor')->get()),
+        return $this->paginatedResponse(
+            PendaftaranResource::collection($peserta->pendaftarans()->with('pelatihan.mentor')->latest()->paginate($this->perPage)),
             'Riwayat pelatihan berhasil diambil'
         );
     }

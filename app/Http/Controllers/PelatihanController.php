@@ -7,38 +7,26 @@ use App\Http\Resources\PendaftaranResource;
 use App\Models\Pelatihan;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePelatihanRequest;
+use App\Http\Requests\UpdatePelatihanRequest;
 
 class PelatihanController extends Controller
 {
     public function index()
     {
-        return $this->successResponse(
-            PelatihanResource::collection(Pelatihan::with(['mentor', 'keahlians.kategori'])->get()),
+        return $this->paginatedResponse(
+            PelatihanResource::collection(Pelatihan::with(['mentor', 'keahlians.kategori'])->latest()->paginate($this->perPage)),
             'Data pelatihan berhasil diambil'
         );
     }
 
-    public function store(Request $request)
+    public function store(StorePelatihanRequest $request)
     {
         if ($response = $this->authorizeAdmin($request)) {
             return $response;
         }
 
-        $data = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'kategori' => 'nullable|string',
-            'level' => 'nullable|string',
-            'durasi' => 'nullable|string',
-            'sertifikat' => 'nullable|string',
-            'mentor_id' => 'nullable|exists:tabel_mentor,id',
-            'tanggal_mulai' => 'required|date',
-            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'status' => 'nullable|string',
-            'is_active' => 'boolean',
-            'keahlian_ids' => 'nullable|array',
-            'keahlian_ids.*' => 'exists:tabel_keahlian,id',
-        ]);
+        $data = $request->validated();
 
         $keahlianIds = $data['keahlian_ids'] ?? [];
         unset($data['keahlian_ids']);
@@ -58,27 +46,13 @@ class PelatihanController extends Controller
         );
     }
 
-    public function update(Request $request, Pelatihan $pelatihan)
+    public function update(UpdatePelatihanRequest $request, Pelatihan $pelatihan)
     {
         if ($response = $this->authorizeAdmin($request)) {
             return $response;
         }
 
-        $data = $request->validate([
-            'judul' => 'sometimes|required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'kategori' => 'nullable|string',
-            'level' => 'nullable|string',
-            'durasi' => 'nullable|string',
-            'sertifikat' => 'nullable|string',
-            'mentor_id' => 'nullable|exists:tabel_mentor,id',
-            'tanggal_mulai' => 'sometimes|required|date',
-            'tanggal_selesai' => 'sometimes|required|date|after_or_equal:tanggal_mulai',
-            'status' => 'nullable|string',
-            'is_active' => 'boolean',
-            'keahlian_ids' => 'nullable|array',
-            'keahlian_ids.*' => 'exists:tabel_keahlian,id',
-        ]);
+        $data = $request->validated();
 
         $keahlianIds = $data['keahlian_ids'] ?? null;
         unset($data['keahlian_ids']);
@@ -109,9 +83,7 @@ class PelatihanController extends Controller
 
     public function pendaftaran(Request $request, Pelatihan $pelatihan)
     {
-        $data = $request->validate([
-            'peserta_id' => 'required|exists:tabel_peserta,id',
-        ]);
+        $data = $request->validated();
 
         $exists = Pendaftaran::where('pelatihan_id', $pelatihan->id)
             ->where('peserta_id', $data['peserta_id'])

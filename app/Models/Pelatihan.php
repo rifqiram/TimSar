@@ -11,7 +11,6 @@ class Pelatihan extends Model
     protected $fillable = [
         'judul',
         'deskripsi',
-        'kategori',
         'level',
         'durasi',
         'sertifikat',
@@ -19,8 +18,7 @@ class Pelatihan extends Model
         'tanggal_mulai',
         'tanggal_selesai',
         'is_active',
-        'status',
-    ];
+        ];
 
     protected $casts = [
         'is_active' => 'boolean',
@@ -42,7 +40,7 @@ class Pelatihan extends Model
     {
         return $this->belongsToMany(Peserta::class, 'tabel_pendaftaran', 'pelatihan_id', 'peserta_id')
             ->withTimestamps()
-            ->withPivot(['status', 'tanggal_daftar']);
+            ->withPivot(['tanggal_daftar']);
     }
 
     public function keahlians()

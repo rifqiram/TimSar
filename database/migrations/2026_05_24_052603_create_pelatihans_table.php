@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('mentor_id')->nullable()->constrained('tabel_mentor')->nullOnDelete();
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(true)->index();
             $table->timestamps();
         });
     }
