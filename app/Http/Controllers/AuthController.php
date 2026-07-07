@@ -32,9 +32,44 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
+        // Bypass data user login: jika kosong karena tanpa middleware, ambil user pertama (levy danendra)
+        $user = $request->user() ?? User::first();
+
         return $this->successResponse([
-            'user' => new UserResource($request->user()),
+            'user' => new UserResource($user),
         ], 'Data user berhasil diambil');
+    }
+
+    public function updateProfile(Request $request)
+    {
+        // BYPASS AUTHENTICATION UNTUK TESTING:
+        // Jika request->user() kosong, cari user berdasarkan email inputan atau ambil user pertama
+        $user = $request->user() ?? User::where('email', $request->email)->first() ?? User::first();
+
+        if (! $user) {
+            return $this->errorResponse('User tidak ditemukan', 404);
+        }
+
+        // Validasi input data profil (menggunakan tabel_users sesuai register)
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:tabel_users,email,' . $user->id,
+            'no_telp' => 'nullable|string|max:15',
+            'alamat' => 'nullable|string',
+        ]);
+
+        // Update data ke database tabel_users
+        $user->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'no_telp' => $data['no_telp'],
+            'alamat' => $data['alamat'],
+        ]);
+
+        // Mengembalikan response sukses dengan format standar kelompokmu
+        return $this->successResponse([
+            'user' => new UserResource($user),
+        ], 'Profil berhasil diperbarui');
     }
 
     public function register(Request $request)
