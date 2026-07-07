@@ -2,9 +2,13 @@
 
 use App\Http\Controllers\AuthController;
 <<<<<<< HEAD
+use App\Http\Controllers\UserController; // 1. SUDAH DITAMBAHKAN DI SINI
+=======
+<<<<<<< HEAD
 use App\Http\Controllers\ProfileController; // Tambahkan import ProfileController
 =======
 use App\Http\Controllers\PendaftaranController;
+>>>>>>> origin/main
 >>>>>>> origin/main
 use Illuminate\Support\Facades\Route;
 
@@ -16,21 +20,33 @@ Route::view('/admin/dashboard', 'admin.Dashboard.dashboard')->name('admin.dashbo
 Route::view('/user/login', 'user.Auth.login')->name('user.login');
 Route::view('/user/register', 'user.Auth.register')->name('user.register');
 
+<<<<<<< HEAD
+// User Routes
+=======
+>>>>>>> origin/main
 // User Routes (Middleware dilepas di web karena auth menggunakan localStorage JS)
 Route::prefix('user')->name('user.')->group(function () {
     Route::view('/dashboard', 'user.dashboard.index')->name('dashboard');
     
+<<<<<<< HEAD
+    // 2. PERBAIKAN: Parameter {id} dihapus agar sidebar tidak melempar error
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::post('/profile', [UserController::class, 'storeOrUpdate'])->name('profile.store');
+=======
     // --- PENYESUAIAN LANGKAH 3 DI SINI ---
     // Mengganti Route::view('/profile'...) menjadi Route::get dan Route::put ke Controller
     Route::view('/profile', 'user.profile.index')->name('profile');
 <<<<<<< HEAD
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // ------------------------------------
+>>>>>>> origin/main
     
     Route::view('/training', 'user.training.index')->name('training');
     Route::view('/recommendation', 'user.recommendation.index')->name('recommendation');
 });
 
+<<<<<<< HEAD
+=======
 // Admin Routes ...
 =======
     
@@ -41,6 +57,7 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::view('/recommendation', 'user.recommendation.index')->name('recommendation');
 });
 
+>>>>>>> origin/main
 >>>>>>> origin/main
 Route::view('/admin/pelatihan/create', 'admin.Pelatihan.pelatihan-create')->name('admin.pelatihan.create');
 Route::view('/admin/pelatihan/edit', 'admin.Pelatihan.pelatihan-edit')->name('admin.pelatihan.edit');
@@ -54,5 +71,9 @@ Route::view('/admin/pendaftaran/create', 'admin.Pendaftaran.pendaftaran-create')
 <<<<<<< HEAD
 Route::redirect('/', '/user/login');
 =======
+<<<<<<< HEAD
+Route::redirect('/', '/user/login');
+=======
 Route::view('/', 'welcome')->name('landing');
+>>>>>>> origin/main
 >>>>>>> origin/main

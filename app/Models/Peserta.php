@@ -8,11 +8,16 @@ class Peserta extends Model
 {
     protected $table = 'tabel_peserta';
 
+    /**
+     * Langkah 2: Menambahkan kolom baru ke dalam $fillable
+     * Agar data 'umur' dan 'keahlian' bisa diisi (mass assignment)
+     */
     protected $fillable = [
         'nama',
         'email',
-        'telepon',
-        'keahlian',
+        'telepon', 
+        'umur',     // Menambahkan 'umur'
+        'keahlian', // Menambahkan 'keahlian'
     ];
 
     public function pendaftarans()

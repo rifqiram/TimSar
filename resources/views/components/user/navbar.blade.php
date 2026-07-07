@@ -15,6 +15,12 @@
                 </button>
             </div>
 
+<<<<<<< HEAD
+
+
+            <!-- Header: Right side -->
+=======
+>>>>>>> origin/main
             <div class="flex items-center space-x-3">
                 <div class="relative inline-flex" id="userMenuContainer">
                     <button id="userMenuBtn" class="inline-flex justify-center items-center group hover:bg-slate-50 px-3 py-2 rounded-lg transition-colors duration-200">
@@ -41,4 +47,10 @@
 
         </div>
     </div>
+<<<<<<< HEAD
 </header>
+
+<!-- ct -->
+=======
+</header>
+>>>>>>> origin/main
