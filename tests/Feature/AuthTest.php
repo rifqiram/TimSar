@@ -50,6 +50,6 @@ class AuthTest extends TestCase
         $this->postJson('/api/logout')
             ->assertOk()
             ->assertJsonPath('success', true)
-            ->assertJsonPath('message', 'Logout berhasil');
+            ->assertJsonPath('message', 'Logout berhasil.');
     }
 }

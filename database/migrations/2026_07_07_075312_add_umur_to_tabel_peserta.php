@@ -10,14 +10,14 @@ return new class extends Migration
     {
         Schema::table('tabel_peserta', function (Blueprint $table) {
             $table->integer('umur')->nullable()->after('nama');
-            $table->string('keahlian')->nullable()->after('telepon');
+            // $table->string()->nullable()->after('telepon'); // Dihapus karena redundant
         });
     }
 
     public function down(): void
     {
         Schema::table('tabel_peserta', function (Blueprint $table) {
-            $table->dropColumn(['umur', 'keahlian']);
+            $table->dropColumn(['umur', ]);
         });
     }
 };

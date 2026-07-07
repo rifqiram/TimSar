@@ -11,7 +11,8 @@ return new class extends Migration
         Schema::table('tabel_peserta', function (Blueprint $table) {
             if (Schema::hasColumn('tabel_peserta', 'instansi')) {
                 // MySQL: renameColumn supported from Laravel 9+
-                $table->renameColumn('instansi', 'keahlian');
+                // $table->renameColumn('instansi', 'keahlian');
+                $table->dropColumn('instansi'); // Dibuang sepenuhnya karena menggunakan pivot tabel_peserta_keahlian
             }
         });
     }

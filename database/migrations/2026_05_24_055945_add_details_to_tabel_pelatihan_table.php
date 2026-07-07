@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tabel_pelatihan', function (Blueprint $table) {
-            $table->string('kategori')->nullable()->after('deskripsi');
-            $table->string('level')->nullable()->after('kategori');
+            // $table->string('kategori')->nullable()->after('deskripsi'); // Dihapus karena redundan dengan tabel_kategori
+            $table->string('level')->nullable()->after('deskripsi');
             $table->string('durasi')->nullable()->after('level');
             $table->string('sertifikat')->nullable()->after('durasi');
-            $table->string('status')->default('Aktif')->after('is_active');
+            // $table->string('status')->default('Aktif')->after('is_active'); // Dihapus karena redundan dengan is_active boolean
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tabel_pelatihan', function (Blueprint $table) {
-            $table->dropColumn(['kategori', 'level', 'durasi', 'sertifikat', 'status']);
+            $table->dropColumn(['level', 'durasi', 'sertifikat', ]);
         });
     }
 };

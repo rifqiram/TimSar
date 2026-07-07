@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\MentorResource;
 use App\Models\Mentor;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreMentorRequest;
+use App\Http\Requests\UpdateMentorRequest;
 
 class MentorController extends Controller
 {
@@ -14,21 +16,16 @@ class MentorController extends Controller
             return $response;
         }
 
-        return $this->successResponse(MentorResource::collection(Mentor::all()), 'Data mentor berhasil diambil');
+        return $this->successResponse(MentorResource::collection(Mentor::latest()->paginate($this->perPage)), 'Data mentor berhasil diambil');
     }
 
-    public function store(Request $request)
+    public function store(StoreMentorRequest $request)
     {
         if ($response = $this->authorizeAdmin($request)) {
             return $response;
         }
 
-        $data = $request->validate([
-            'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:tabel_mentor,email',
-            'telepon' => 'nullable|string|max:50',
-            'keahlian' => 'nullable|string|max:255',
-        ]);
+        $data = $request->validated();
 
         $mentor = Mentor::create($data);
 
@@ -44,18 +41,13 @@ class MentorController extends Controller
         return $this->successResponse(new MentorResource($mentor), 'Detail mentor berhasil diambil');
     }
 
-    public function update(Request $request, Mentor $mentor)
+    public function update(UpdateMentorRequest $request, Mentor $mentor)
     {
         if ($response = $this->authorizeAdmin($request)) {
             return $response;
         }
 
-        $data = $request->validate([
-            'nama' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|email|unique:tabel_mentor,email,' . $mentor->id,
-            'telepon' => 'nullable|string|max:50',
-            'keahlian' => 'nullable|string|max:255',
-        ]);
+        $data = $request->validated();
 
         $mentor->update($data);
 

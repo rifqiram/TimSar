@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('peserta_id')->constrained('tabel_peserta')->cascadeOnDelete();
             $table->foreignId('pelatihan_id')->constrained('tabel_pelatihan')->cascadeOnDelete();
             $table->date('tanggal_daftar');
-            $table->string('status')->default('terdaftar');
+            $table->string('status')->default('terdaftar')->index();
             $table->timestamps();
         });
     }

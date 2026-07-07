@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 #[Hidden(['password', 'remember_token', 'api_token'])]
 class User extends Authenticatable
 {
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER = 'user';
+    const ROLE_PENCARI_KERJA = 'pencari_kerja';
+
     protected $table = 'tabel_users';
 
     /** @use HasFactory<UserFactory> */

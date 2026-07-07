@@ -29,14 +29,14 @@ class AuthService
 
     public function registerUser(array $data, ?User $currentUser = null): User
     {
-        $requestedRole = $data['role'] ?? 'user';
+        $requestedRole = $data['role'] ?? User::ROLE_USER;
         
-        // Aturan default: Hanya bisa mendaftar sebagai 'user'
-        $role = in_array($requestedRole, ['user', 'pencari_kerja'], true) ? 'user' : 'user';
+        // Aturan default: Hanya bisa mendaftar sebagai User::ROLE_USER
+        $role = in_array($requestedRole, [User::ROLE_USER, User::ROLE_PENCARI_KERJA], true) ? User::ROLE_USER : User::ROLE_USER;
 
-        // Hanya admin yang sedang login yang bisa membuat user dengan role 'admin'
-        if ($currentUser && $currentUser->role === 'admin' && $requestedRole === 'admin') {
-            $role = 'admin';
+        // Hanya admin yang sedang login yang bisa membuat user dengan role User::ROLE_ADMIN
+        if ($currentUser && $currentUser->role === User::ROLE_ADMIN && $requestedRole === User::ROLE_ADMIN) {
+            $role = User::ROLE_ADMIN;
         }
 
         return User::create([

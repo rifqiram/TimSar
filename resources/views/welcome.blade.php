@@ -71,7 +71,7 @@
                 background: linear-gradient(to right, #dbeafe, #93c5fd);
             }
         </style>
-    </head>
+    <script src="https://cdn.tailwindcss.com"></script></head>
     <body class="min-h-screen bg-slate-50 text-slate-900 antialiased">
 
         {{-- NAVBAR --}}
@@ -119,7 +119,7 @@
                                class="btn-primary-hover inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-600 text-white font-bold shadow-lg shadow-blue-200 hover:bg-blue-700">
                                 Lihat Program Pelatihan
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                        <a href="{{ route('user.pendaftaran.create') }}"
+                        <a href="{{ route('user.login') }}"
                         class="btn-primary-hover inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-slate-800 font-bold border border-slate-200 shadow hover:bg-slate-50">
                          Daftar Sekarang
                         </a>

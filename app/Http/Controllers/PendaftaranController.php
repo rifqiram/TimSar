@@ -6,32 +6,32 @@ use App\Http\Resources\PendaftaranResource;
 use App\Models\Pendaftaran;
 use App\Models\Pelatihan; 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use App\Http\Requests\StorePendaftaranRequest;
+use App\Http\Requests\StoreUserPendaftaranRequest;
+use App\Http\Requests\UpdatePendaftaranRequest;
 use Illuminate\Support\Facades\Auth; 
-use Illuminate\Support\Facades\DB; // <-- Tambahan untuk akses database
 
 class PendaftaranController extends Controller
 {
-    // =====================================================================
-    // 1. BAGIAN WEB (UNTUK FORM PENDAFTARAN USER)
-    // =====================================================================
 
     // Menampilkan halaman form pendaftaran dengan data dropdown
     public function create()
     {
-        $pelatihans = Pelatihan::with('mentor')->get();
-        return view('user.training.index', compact('pelatihans')); // Atau sesuaikan dengan nama view lo
+        $pelatihans = Pelatihan::with('mentor')->where('is_active', true)->latest()->get();
+        return view('user.training.index', compact('pelatihans')); 
     }
 
     // Memproses data pendaftaran dari form web
-    public function storeUser(Request $request)
+    public function storeUser(StoreUserPendaftaranRequest $request)
     {
-        $request->validate([
-            'pelatihan_id' => 'required|exists:tabel_pelatihan,id',
-        ]);
+        $request->validated();
 
-        // Mengambil ID peserta pertama yang ada di database secara dinamis biar gak error foreign key
-        $pesertaData = DB::table('tabel_peserta')->first();
-        $pesertaId = Auth::id() ?: ($pesertaData ? $pesertaData->id : 1); 
+        $pesertaId = Auth::id();
+
+        if (!$pesertaId) {
+            return redirect()->back()->with('error', 'Gagal: Silakan login terlebih dahulu.');
+        } 
 
         // Cek apakah user sudah daftar pelatihan yang sama sebelumnya
         $exists = Pendaftaran::where('peserta_id', $pesertaId)
@@ -43,6 +43,7 @@ class PendaftaranController extends Controller
         }
 
         // Simpan ke database
+        Cache::forget('rekomendasi_peserta_' . $pesertaId);
         Pendaftaran::create([
             'peserta_id' => $pesertaId,
             'pelatihan_id' => $request->pelatihan_id,
@@ -53,35 +54,25 @@ class PendaftaranController extends Controller
         return redirect()->back()->with('success', 'Mantap! Pendaftaran pelatihan berhasil dilakukan.');
     }
 
-
-    // =====================================================================
-    // 2. BAGIAN API (KODINGAN ASLI MILIKMU, TIDAK DIUBAH)
-    // =====================================================================
-
     public function index(Request $request)
     {
         if ($response = $this->authorizeAdmin($request)) {
             return $response;
         }
 
-        return $this->successResponse(
-            PendaftaranResource::collection(Pendaftaran::with(['peserta', 'pelatihan.mentor'])->get()),
+        return $this->paginatedResponse(
+            PendaftaranResource::collection(Pendaftaran::with(['peserta', 'pelatihan.mentor'])->latest()->paginate($this->perPage)),
             'Data pendaftaran berhasil diambil'
         );
     }
 
-    public function store(Request $request)
+    public function store(StorePendaftaranRequest $request)
     {
         if ($response = $this->authorizeAdmin($request)) {
             return $response;
         }
 
-        $data = $request->validate([
-            'peserta_id' => 'required|exists:tabel_peserta,id',
-            'pelatihan_id' => 'required|exists:tabel_pelatihan,id',
-            'tanggal_daftar' => 'nullable|date',
-            'status' => 'nullable|string|max:50',
-        ]);
+        $data = $request->validated();
 
         $exists = Pendaftaran::where('peserta_id', $data['peserta_id'])
             ->where('pelatihan_id', $data['pelatihan_id'])
@@ -94,6 +85,7 @@ class PendaftaranController extends Controller
         $data['tanggal_daftar'] = $data['tanggal_daftar'] ?? now();
         $data['status'] = $data['status'] ?? 'terdaftar';
 
+        Cache::forget('rekomendasi_peserta_' . $data['peserta_id']);
         $pendaftaran = Pendaftaran::create($data);
 
         return $this->successResponse(new PendaftaranResource($pendaftaran->load(['peserta', 'pelatihan.mentor'])), 'Pendaftaran berhasil dibuat', 201);
@@ -108,18 +100,13 @@ class PendaftaranController extends Controller
         return $this->successResponse(new PendaftaranResource($pendaftaran->load(['peserta', 'pelatihan.mentor'])), 'Detail pendaftaran berhasil diambil');
     }
 
-    public function update(Request $request, Pendaftaran $pendaftaran)
+    public function update(UpdatePendaftaranRequest $request, Pendaftaran $pendaftaran)
     {
         if ($response = $this->authorizeAdmin($request)) {
             return $response;
         }
 
-        $data = $request->validate([
-            'peserta_id' => 'sometimes|required|exists:tabel_peserta,id',
-            'pelatihan_id' => 'sometimes|required|exists:tabel_pelatihan,id',
-            'tanggal_daftar' => 'sometimes|required|date',
-            'status' => 'sometimes|required|string|max:50',
-        ]);
+        $data = $request->validated();
 
         $pendaftaran->update($data);
 
