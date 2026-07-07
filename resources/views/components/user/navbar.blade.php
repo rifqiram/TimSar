@@ -2,10 +2,9 @@
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 -mb-px">
             
-            <!-- Header: Left side -->
             <div class="flex items-center">
-                <span class="font-extrabold text-xl text-slate-800 tracking-tight hidden md:block">{{ config('app.name', 'TimSar') }}</span>
-                <!-- Hamburger button for mobile (placeholder) -->
+                <span class="font-extrabold text-xl text-slate-800 tracking-tight hidden md:block">@yield('title', config('app.name', 'TimSar'))</span>
+                
                 <button class="md:hidden text-gray-500 hover:text-gray-600" aria-controls="sidebar" aria-expanded="false">
                     <span class="sr-only">Open sidebar</span>
                     <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -16,9 +15,7 @@
                 </button>
             </div>
 
-            <!-- Header: Right side -->
             <div class="flex items-center space-x-3">
-                <!-- User Menu -->
                 <div class="relative inline-flex" id="userMenuContainer">
                     <button id="userMenuBtn" class="inline-flex justify-center items-center group hover:bg-slate-50 px-3 py-2 rounded-lg transition-colors duration-200">
                         <img class="w-8 h-8 rounded-full bg-gray-200" id="navUserAvatar" src="https://ui-avatars.com/api/?name=User&background=random" width="32" height="32" alt="User" />
@@ -29,7 +26,6 @@
                             </svg>
                         </div>
                     </button>
-                    <!-- Dropdown Placeholder (dikelola CSS/JS nanti) -->
                     <div id="userMenuDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-xl overflow-hidden py-2 ring-1 ring-black ring-opacity-5">
                         <ul>
                             <li>
