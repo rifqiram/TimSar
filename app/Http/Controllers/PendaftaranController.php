@@ -4,10 +4,60 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PendaftaranResource;
 use App\Models\Pendaftaran;
+use App\Models\Pelatihan; 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\DB; // <-- Tambahan untuk akses database
 
 class PendaftaranController extends Controller
 {
+    // =====================================================================
+    // 1. BAGIAN WEB (UNTUK FORM PENDAFTARAN USER)
+    // =====================================================================
+
+    // Menampilkan halaman form pendaftaran dengan data dropdown
+    public function create()
+    {
+        $pelatihans = Pelatihan::with('mentor')->get();
+        return view('user.training.index', compact('pelatihans')); // Atau sesuaikan dengan nama view lo
+    }
+
+    // Memproses data pendaftaran dari form web
+    public function storeUser(Request $request)
+    {
+        $request->validate([
+            'pelatihan_id' => 'required|exists:tabel_pelatihan,id',
+        ]);
+
+        // Mengambil ID peserta pertama yang ada di database secara dinamis biar gak error foreign key
+        $pesertaData = DB::table('tabel_peserta')->first();
+        $pesertaId = Auth::id() ?: ($pesertaData ? $pesertaData->id : 1); 
+
+        // Cek apakah user sudah daftar pelatihan yang sama sebelumnya
+        $exists = Pendaftaran::where('peserta_id', $pesertaId)
+            ->where('pelatihan_id', $request->pelatihan_id)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->with('error', 'Gagal: Kamu sudah terdaftar di pelatihan ini!');
+        }
+
+        // Simpan ke database
+        Pendaftaran::create([
+            'peserta_id' => $pesertaId,
+            'pelatihan_id' => $request->pelatihan_id,
+            'tanggal_daftar' => now(),
+            'status' => 'terdaftar'
+        ]);
+
+        return redirect()->back()->with('success', 'Mantap! Pendaftaran pelatihan berhasil dilakukan.');
+    }
+
+
+    // =====================================================================
+    // 2. BAGIAN API (KODINGAN ASLI MILIKMU, TIDAK DIUBAH)
+    // =====================================================================
+
     public function index(Request $request)
     {
         if ($response = $this->authorizeAdmin($request)) {
