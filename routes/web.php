@@ -33,7 +33,4 @@ Route::view('/admin/peserta/edit', 'admin.Peserta.peserta-edit')->name('admin.pe
 Route::view('/admin/peserta/riwayat', 'admin.Peserta.peserta-riwayat')->name('admin.peserta.riwayat');
 Route::view('/admin/pendaftaran/create', 'admin.Pendaftaran.pendaftaran-create')->name('admin.pendaftaran.create');
 
-Route::redirect('/', '/user/login');
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome')->name('landing');

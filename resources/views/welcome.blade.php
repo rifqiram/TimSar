@@ -88,7 +88,7 @@
                         <a href="#programs" class="nav-link">Pelatihan</a>
                         <a href="#mentors"  class="nav-link">Mentor</a>
                         <a href="#footer"   class="nav-link">Kontak</a>
-                        <a href="{{ url('/user/login') }}"
+                        <a href="{{ route('user.login') }}"
                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition btn-primary-hover">
                             Login
                         </a>
@@ -389,7 +389,7 @@
                             <a href="#programs" class="hover:text-blue-600 transition">Pelatihan</a>
                             <a href="#mentors" class="hover:text-blue-600 transition">Mentor</a>
                             <a href="#footer" class="hover:text-blue-600 transition">Kontak</a>
-                            <a href="{{ url('/user/login') }}" class="hover:text-blue-600 transition">Login</a>
+                            <a href="{{ route('user.login') }}" class="hover:text-blue-600 transition">Login</a>
                         </div>
                     </div>
                 </div>
