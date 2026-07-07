@@ -1,11 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-<<<<<<< HEAD
-use App\Http\Controllers\PendaftaranController; // <-- Tambahan untuk memanggil Controller kita
-=======
-use App\Http\Controllers\PendaftaranController; // <-- Tambahan baru
->>>>>>> ba3b461849dd86ba8e1876113d6792d5393e4277
+use App\Http\Controllers\PendaftaranController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/admin', '/admin/login');
@@ -15,27 +11,18 @@ Route::view('/admin/dashboard', 'admin.Dashboard.dashboard')->name('admin.dashbo
 
 Route::view('/user/login', 'user.Auth.login')->name('user.login');
 Route::view('/user/register', 'user.Auth.register')->name('user.register');
-<<<<<<< HEAD
 
-// User Routes
 // User Routes (Middleware dilepas di web karena auth menggunakan localStorage JS)
 Route::prefix('user')->name('user.')->group(function () {
     Route::view('/dashboard', 'user.dashboard.index')->name('dashboard');
     Route::view('/profile', 'user.profile.index')->name('profile');
     
-    // UBAH INI: Diarahkan ke Controller agar bisa mengambil data $pelatihans dari database
+    // Rute Form Pendaftaran Pelatihan
     Route::get('/training', [PendaftaranController::class, 'create'])->name('training');
-    
-    // TAMBAH INI: Rute untuk memproses dan menyimpan data form pendaftaran
     Route::post('/pendaftaran/store', [PendaftaranController::class, 'storeUser'])->name('pendaftaran.store');
     
     Route::view('/recommendation', 'user.recommendation.index')->name('recommendation');
 });
-=======
-Route::view('/user/dashboard', 'user.Dashboard.dashboard')->name('user.dashboard');
-Route::get('/user/pendaftaran', [PendaftaranController::class, 'create'])->name('user.pendaftaran.create');
-Route::post('/user/pendaftaran', [PendaftaranController::class, 'storeUser'])->name('user.pendaftaran.store');
->>>>>>> ba3b461849dd86ba8e1876113d6792d5393e4277
 
 Route::view('/admin/pelatihan/create', 'admin.Pelatihan.pelatihan-create')->name('admin.pelatihan.create');
 Route::view('/admin/pelatihan/edit', 'admin.Pelatihan.pelatihan-edit')->name('admin.pelatihan.edit');
