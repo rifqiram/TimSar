@@ -1,10 +1,6 @@
 # 🚀 TimSar - Sistem Rekomendasi Pelatihan Berbasis Laravel
 
 <p align="center">
-  <img src="public/images/logo.png" alt="TimSar Logo" width="180">
-</p>
-
-<p align="center">
 Sistem informasi manajemen pelatihan berbasis web yang dilengkapi dengan fitur <strong>Rekomendasi Pelatihan</strong> berdasarkan profil dan keahlian peserta menggunakan Laravel REST API.
 </p>
 
