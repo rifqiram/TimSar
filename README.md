@@ -1,81 +1,171 @@
+# 🚀 TimSar - Sistem Rekomendasi Pelatihan Berbasis Laravel
+
 <p align="center">
-  <a href="https://laravel.com" target="_blank">
-    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
-  </a>
+  <img src="public/images/logo.png" alt="TimSar Logo" width="180">
 </p>
 
-# 🚀 Uts-RekomendasiPelatihan
-
-Sistem manajemen pelatihan berbasis Laravel yang mengelola data mentor, kelas, dan proses pendaftaran peserta secara terstruktur.
-
----
-
-## 📌 Karakteristik Sistem
-
-* **⚙️ Arsitektur:** Menggunakan MVC & Eloquent ORM dengan relasi tabel pivot antara Peserta dan Pelatihan.
-* **🔒 Keamanan:** Proteksi hak akses Admin/User via *middleware* otorisasi dan validasi input yang ketat.
-* **🧩 Fleksibilitas:** Menyediakan API Controller & Resource untuk kemudahan integrasi dengan platform lain.
+<p align="center">
+Sistem informasi manajemen pelatihan berbasis web yang dilengkapi dengan fitur <strong>Rekomendasi Pelatihan</strong> berdasarkan profil dan keahlian peserta menggunakan Laravel REST API.
+</p>
 
 ---
 
-## 🌐 Dokumentasi API
+# 📖 Tentang Proyek
 
-Aplikasi ini telah menyediakan RESTful API. Kamu bisa melihat dokumentasi lengkapnya melalui tautan di bawah ini:
+**TimSar** merupakan aplikasi berbasis web yang dikembangkan untuk membantu proses pengelolaan pelatihan secara digital. Sistem menyediakan dua jenis pengguna, yaitu **Administrator** dan **Peserta**, dengan fitur pengelolaan data pelatihan, mentor, kategori, keahlian, pendaftaran, serta rekomendasi pelatihan yang sesuai dengan profil peserta.
 
-* 📄 [Lihat Dokumentasi API (PDF)](./public/docs/api-documentation.pdf)
-* 📄 [Dokumentasi Sistem](public/docs/dokumentasi-sistem-pelatihanIT.pdf)
-* 🚀 [Postman Collection (JSON)](./public/docs/My%20Collection.postman_collection.json)
+Selain menyediakan antarmuka berbasis Blade, sistem juga menyediakan **REST API** sehingga dapat diintegrasikan dengan aplikasi mobile maupun layanan pihak ketiga.
 
 ---
 
-## 🛠️ Langkah Instalasi Lokal
+# ✨ Fitur Utama
 
-Ikuti langkah-langkah berikut untuk menjalankan proyek ini di komputer lokal Anda:
+## 👤 Autentikasi
 
-### 1. Clone Repositori
-
-https://github.com/rifqiram/Uts-RekomendasiPelatihan.git
+* Login
+* Register
+* Logout
+* Profile Management
+* Token Authentication (Laravel Sanctum)
 
 ---
 
-## 📂 Struktur Sistem
+## 👨‍💼 Admin
 
-Beberapa struktur utama pada project:
+* Dashboard
+* CRUD Pelatihan
+* CRUD Mentor
+* CRUD Kategori
+* CRUD Keahlian
+* CRUD Peserta
+* Manajemen Pendaftaran
+* Monitoring Aktivitas
 
-```txt
-app/            -> Logic aplikasi (Controller, Model, Middleware)
-config/         -> Konfigurasi aplikasi
-database/       -> Migration, Seeder, Factory
-public/         -> Asset publik dan dokumentasi API
-resources/      -> View, CSS, JS
-routes/         -> Routing web dan API
-storage/        -> Penyimpanan file sistem
-tests/          -> Pengujian aplikasi
+---
+
+## 👨‍🎓 Peserta
+
+* Melengkapi Profil
+* Melihat Daftar Pelatihan
+* Mendaftar Pelatihan
+* Riwayat Pelatihan
+* Melihat Rekomendasi Pelatihan
+
+---
+
+## 🎯 Sistem Rekomendasi
+
+Fitur rekomendasi merupakan nilai utama dari aplikasi ini.
+
+Sistem akan:
+
+* membaca profil peserta
+* mencocokkan keahlian peserta
+* mencari pelatihan yang sesuai
+* mengecualikan pelatihan yang sudah pernah diikuti
+* menghitung skor kecocokan
+* menampilkan:
+
+  * Score
+  * Matched Skills
+  * Missing Skills
+  * Gap Count
+
+---
+
+# 🛠️ Teknologi yang Digunakan
+
+## Backend
+
+* PHP 8.x
+* Laravel 13
+* Laravel Sanctum
+* Eloquent ORM
+* REST API
+* Resource API
+* Form Request Validation
+* Custom Middleware
+* Laravel Cache
+
+## Frontend
+
+* Blade Template
+* HTML5
+* CSS3
+* JavaScript
+* Tailwind CSS
+* Vite
+
+## Database
+
+* MySQL
+* Migration
+* Seeder
+* Factory
+
+## Testing
+
+* PHPUnit
+* Faker
+
+---
+
+# 🏗️ Arsitektur Sistem
+
+Project menggunakan pola **MVC (Model View Controller)** yang disediakan Laravel.
+
+```
+app/
+ ├── Http/
+ │    ├── Controllers
+ │    ├── Middleware
+ │    └── Requests
+ │
+ ├── Models
+ ├── Services
+ ├── Providers
+ └── Helpers
+
+database/
+ ├── migrations
+ ├── seeders
+ └── factories
+
+resources/
+ ├── views
+ ├── css
+ └── js
+
+routes/
+ ├── web.php
+ └── api.php
 ```
 
 ---
 
-## 🚀 Instalasi Project
+# 📦 Instalasi
 
-Ikuti langkah berikut untuk menjalankan project di komputer lokal.
-
-### 1. Clone Repository
+## Clone Repository
 
 ```bash
-git clone https://github.com/rifqiram/Uts-RekomendasiPelatihan.git
+git clone https://github.com/rifqiram/TimSar.git
+```
+
+Masuk ke folder project
+
+```bash
+cd TimSar
 ```
 
 ---
 
-### 2. Install Dependency
-
-Pastikan **Composer** telah terinstal, lalu jalankan:
+## Install Dependency
 
 ```bash
 composer install
 ```
 
-Jika project menggunakan frontend asset (Vite/NPM):
+Install frontend
 
 ```bash
 npm install
@@ -83,102 +173,184 @@ npm install
 
 ---
 
-### 3. Setup Environment
+## Konfigurasi Environment
 
-Salin file environment:
+Salin file environment
 
 ```bash
 cp .env.example .env
 ```
 
-Generate application key:
+Generate application key
 
 ```bash
 php artisan key:generate
 ```
 
-Kemudian buka file `.env` dan sesuaikan konfigurasi database:
+Konfigurasikan database pada file `.env`
 
 ```env
-DB_DATABASE=uts_rekomendasi_pelatihan
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=timsar
 DB_USERNAME=root
 DB_PASSWORD=
 ```
 
 ---
 
-### 4. Migrasi Database dan Seeder
-
-Pastikan MySQL aktif, kemudian jalankan:
+## Migrasi Database
 
 ```bash
 php artisan migrate --seed
 ```
 
-Perintah ini akan:
+---
 
-* Membuat seluruh tabel database
-* Menjalankan relasi antar tabel
-* Mengisi data awal (seed)
+## Build Asset
+
+Development
+
+```bash
+npm run dev
+```
+
+Production
+
+```bash
+npm run build
+```
 
 ---
 
-### 5. Jalankan Server Laravel
+## Jalankan Server
 
 ```bash
 php artisan serve
 ```
 
-Aplikasi dapat diakses pada:
+Akses aplikasi
 
-```txt
+```
 http://127.0.0.1:8000
 ```
 
 ---
 
-## 🔍 API Endpoint
+# 🔌 REST API
 
-Contoh endpoint API:
+Project menyediakan sekitar **40 endpoint REST API**.
 
-```txt
-GET    /api/pelatihan
-POST   /api/pelatihan
-GET    /api/peserta
-POST   /api/pendaftaran
-```
+Beberapa endpoint utama:
 
+| Method | Endpoint         | Keterangan        |
+| ------ | ---------------- | ----------------- |
+| POST   | /api/login       | Login             |
+| POST   | /api/register    | Register          |
+| POST   | /api/logout      | Logout            |
+| GET    | /api/profile     | Profil User       |
+| GET    | /api/pelatihan   | Daftar Pelatihan  |
+| POST   | /api/pendaftaran | Daftar Pelatihan  |
+| GET    | /api/rekomendasi | Hasil Rekomendasi |
+
+Seluruh endpoint menggunakan format response JSON yang konsisten.
 
 ---
 
-## 🧪 Testing
+# 🔐 Keamanan
 
-Menjalankan pengujian Laravel:
+Project telah menerapkan:
+
+* Laravel Sanctum
+* API Token Authentication
+* Form Request Validation
+* Middleware Authentication
+* Authorization berdasarkan Role
+* CSRF Protection
+* Mass Assignment Protection
+
+---
+
+# 🧪 Testing
+
+Menjalankan seluruh testing
 
 ```bash
 php artisan test
 ```
 
-atau
+Atau
 
 ```bash
 php artisan test --filter NamaTest
 ```
 
----
+Hasil pengujian terakhir:
 
-## 👨‍💻 Developer
-
-**Rifqi Ramadhan** |
-**6B** |
-**2305101030** |
-Project UTS Pemrograman Web Laravel
+* ✅ 10 Test Suite
+* ✅ 40 Assertions
+* ✅ Seluruh test berhasil dijalankan
 
 ---
 
-## 📝 License
+# 📚 Dokumentasi
 
-Project ini bersifat **open-source** dan menggunakan lisensi **MIT License**.
+Project telah menyediakan:
+
+* Dokumentasi Sistem
+* Dokumentasi REST API
+* Postman Collection
+
+Seluruh file dokumentasi dapat ditemukan pada folder:
 
 ```
+public/docs/
 ```
+
+---
+
+# 📈 Kelebihan Sistem
+
+* REST API yang terstruktur
+* Laravel Sanctum Authentication
+* Dashboard Admin & User
+* Sistem Rekomendasi Pelatihan
+* Response API Konsisten
+* Database Migration & Seeder
+* Automated Testing
+* Modern UI menggunakan Tailwind CSS
+* Siap dikembangkan menjadi aplikasi mobile
+
+---
+
+# ⚠️ Catatan Pengembangan
+
+Beberapa peningkatan yang direkomendasikan:
+
+* Server-side Authorization yang lebih ketat
+* API Versioning
+* Activity Logging
+* Monitoring dan Observability
+* Pengujian lebih luas pada modul rekomendasi
+* Optimasi cache agar hasil rekomendasi lebih real-time
+
+---
+
+# 👨‍💻 Developer
+
+**Rifqi Ramadhan 2305101030**
+**David 23051010--**
+**Syahrul Haris Wijaya 2305101021**
+**Levy Danendra 23051010--**
+**Rizky Cahya 23051010--**
+
+Universitas PGRI Madiun
+
+Program Studi Teknik Informatika
+
+---
+
+# 📄 License
+
+Project ini menggunakan lisensi **MIT License**.
