@@ -338,7 +338,7 @@ Beberapa peningkatan yang direkomendasikan:
 * **Rifqi Ramadhan 2305101030**
 * **David Prastiansyah 2305101026**
 * **Syahrul Haris Wijaya 2305101021**
-* **Levy Danendra 23051010--**
+* **Levy Danendra 2305101032**
 * **Rizky Cahya 23051010--**
 
 Universitas PGRI Madiun
