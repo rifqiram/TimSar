@@ -340,7 +340,7 @@ Beberapa peningkatan yang direkomendasikan:
 # 👨‍💻 Developer
 
 **Rifqi Ramadhan 2305101030**
-**David 23051010--**
+**David Prastiansyah 2305101026**
 **Syahrul Haris Wijaya 2305101021**
 **Levy Danendra 23051010--**
 **Rizky Cahya 23051010--**
