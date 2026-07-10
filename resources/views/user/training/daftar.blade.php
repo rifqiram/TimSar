@@ -1,16 +1,17 @@
 @extends('layouts.user')
 
-@section('title', 'Rekomendasi')
-@section('breadcrumb', 'User / Rekomendasi')
+@section('title', 'Daftar Pelatihan')
+@section('breadcrumb', 'User / Daftar Pelatihan')
 
 @section('content')
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm ring-1 ring-gray-900/5 dark:ring-slate-700 p-8">
 
-    <h3 class="text-lg font-bold mb-6">
-        Rekomendasi Pelatihan
+<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-8">
+
+    <h3 class="text-xl font-bold mb-6">
+        Daftar Pelatihan Yang Sudah Didaftarkan
     </h3>
 
-    <table class="min-w-full border border-gray-300">
+    <table class="min-w-full border">
 
         <thead class="bg-gray-100">
 
@@ -35,15 +36,15 @@
         <tr>
 
             <td class="border p-3">
-                {{ $item->peserta->nama ?? '-' }}
+                {{ $item->peserta->nama }}
             </td>
 
             <td class="border p-3">
-                {{ $item->pelatihan->judul ?? '-' }}
+                {{ $item->pelatihan->judul }}
             </td>
 
             <td class="border p-3">
-                {{ $item->pelatihan->mentor->nama ?? '-' }}
+                {{ $item->pelatihan->mentor->nama }}
             </td>
 
             <td class="border p-3">
@@ -57,7 +58,7 @@
         <tr>
 
             <td colspan="4" class="text-center p-5">
-                Belum ada data pendaftaran.
+                Belum ada data.
             </td>
 
         </tr>
@@ -69,4 +70,5 @@
     </table>
 
 </div>
+
 @endsection
