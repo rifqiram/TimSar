@@ -340,7 +340,7 @@ Beberapa peningkatan yang direkomendasikan:
 * **Syahrul Haris Wijaya 2305101021**
 * **Levy Danendra 2305101032**
 * **Rizky Cahya 2305101033**
-
+* 
 Universitas PGRI Madiun
 
 Program Studi Teknik Informatika
