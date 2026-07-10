@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PelatihanResource;
 use App\Models\Pelatihan;
 use App\Models\Peserta;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\GetRekomendasiRequest;
@@ -47,4 +48,15 @@ class RekomendasiController extends Controller
 
         return $this->successResponse($rekomendasi, 'Rekomendasi pelatihan berhasil diambil');
     }
+
+public function halaman()
+{
+    $pendaftarans = Pendaftaran::with([
+        'peserta',
+        'pelatihan.mentor'
+    ])->get();
+
+    return view('user.recommendation.index', compact('pendaftarans'));
+}
+
 }

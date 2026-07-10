@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\RekomendasiController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,10 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/training', [PendaftaranController::class, 'create'])->name('training');
     Route::post('/pendaftaran/store', [PendaftaranController::class, 'storeUser'])->name('pendaftaran.store');
 
-    Route::view('/recommendation', 'user.recommendation.index')->name('recommendation');
+    Route::get('/my-training', [PendaftaranController::class, 'daftarPelatihan'])
+    ->name('my-training');
+    Route::get('/recommendation', [RekomendasiController::class, 'halaman'])
+    ->name('recommendation');
 });
 
 Route::view('/admin/pelatihan/create', 'admin.Pelatihan.pelatihan-create')->name('admin.pelatihan.create');

@@ -123,4 +123,13 @@ class PendaftaranController extends Controller
 
         return $this->successResponse(null, 'Pendaftaran berhasil dihapus');
     }
+    public function daftarPelatihan()
+    {
+    $pendaftarans = Pendaftaran::with([
+        'peserta',
+        'pelatihan.mentor'
+    ])->get();
+
+    return view('user.training.daftar', compact('pendaftarans'));
+    }
 }
